@@ -16,7 +16,6 @@ locals {
   vpc_project                        = "my-network-host-project"
   network_name                       = "default"
   odb_network_id                     = "tf-ash-odbnetwork"
-  odb_subnet_id                      = "tf-ash-odbnetwork"
   client_cidr_range                  = "172.16.119.0/25"
   backup_cidr_range                  = "172.16.119.128/25"
   gcp_oracle_zone                    = "us-east4-b-r1"
@@ -24,7 +23,7 @@ locals {
   # DB System Configuration
   db_system_id                 = "mydb1"
   dbsystem_project             = "my-oracle-project"
-  ssh_public_keys              = "ssh-key fjslkdfsjdklsdfVSDKVKVDF"
+  ssh_public_keys              = "ssh-rsa insert-key-here"
   ecpu_core_count              = "4"
   hostname_prefix              = "mydb1"
   data_storage_size_gb         = "256"
@@ -67,7 +66,6 @@ module "odb-network" {
   network_name           = local.network_name
   gcp_oracle_zone        = local.gcp_oracle_zone
   odb_network_id         = local.odb_network_id
-  odb_subnet_id          = local.odb_subnet_id
   client_cidr_range      = local.client_cidr_range
   backup_cidr_range      = local.backup_cidr_range
   deletion_protection    = local.network_deletion_protection

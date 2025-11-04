@@ -16,7 +16,6 @@ locals {
   vpc_project                        = "my-network-host-project"
   network_name                       = "default"
   odb_network_id                     = "tf-slc-odbnetwork"
-  odb_subnet_id                      = "tf-slc-odbsubnet"
   client_cidr_range                  = "172.16.119.0/25"
   backup_cidr_range                  = "172.16.119.128/25"
   gcp_oracle_zone                    = "us-west3-a-r1"
@@ -25,7 +24,7 @@ locals {
   exadata_infra_deletion_protection  = "true"
   cloud_exadata_infrastructure_id    = "ofake-tf-slc1"
   exa_infra_project                  = "my-exadata-infra-project"
-  shape                              = "Exadata.X9M"
+  shape                              = "Exadata.X11M"
   compute_count                      = "2"
   storage_count                      = "3"
   
@@ -39,18 +38,7 @@ locals {
   memory_size_gb                     = "60"
   db_node_storage_size_gb            = "120"
   hostname_prefix                    = "slc-vmc1"
-  ssh_public_keys                    = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC84ke2yj8pKtb95hXRujDLuhWez+dOHea2W4E="
-
-  # ADB Instance Configuration
-  adb_deletion_protection            = "true"
-  adb_project                        = "my-adb-project"
-  autonomous_database_id             = "myadb1"
-  ecpu_count                         = "2"
-  data_storage_size_gb               = "20"
-  db_version                         = "23ai"
-  workload_type                      = "OLTP"
-  db_edition                         = "ENTERPRISE_EDITION"
-  adb_license_type                   = "LICENSE_INCLUDED"
+  ssh_public_keys                    = "ssh-rsa insert-key-here"
 }
 
 
@@ -70,7 +58,6 @@ module "odb-network" {
   network_name           = local.network_name
   gcp_oracle_zone        = local.gcp_oracle_zone
   odb_network_id         = local.odb_network_id
-  odb_subnet_id          = local.odb_subnet_id
   client_cidr_range      = local.client_cidr_range
   backup_cidr_range      = local.backup_cidr_range
   deletion_protection    = local.network_deletion_protection
@@ -100,7 +87,6 @@ module "vmcluster-1" {
   exa_vm_project                  = local.exa_vm_project
   vpc_project                     = local.vpc_project
   odb_network_id                  = local.odb_network_id
-  odb_subnet_id                   = local.odb_subnet_id
   cloud_vm_cluster_id             = local.cloud_vm_cluster_id
   cloud_exadata_infrastructure_id = local.cloud_exadata_infrastructure_id
   gi_version                      = local.gi_version

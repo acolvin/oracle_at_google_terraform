@@ -36,11 +36,6 @@ variable "odb_network_id" {
   description = "The name of the ODB Network."
 }
 
-variable "odb_subnet_id" {
-  type = string
-  description = "The name of the ODB Subnet."
-}
-
 variable "license_type" {
     type = string
     description = "either BRING_YOUR_OWN_LICENSE or LICENSE_INCLUDED"

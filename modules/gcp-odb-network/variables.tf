@@ -25,11 +25,6 @@ variable "client_cidr_range" {
   description = "The CIDR range used for the client ODB Subnet."
 }
 
-variable "odb_subnet_id" {
-  type = string
-  description = "The name of the ODB Subnet."
-}
-
 variable "backup_cidr_range" {
   type = string
   description = "The CIDR range used for the backup ODB Subnet."

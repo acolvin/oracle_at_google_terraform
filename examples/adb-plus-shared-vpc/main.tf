@@ -16,7 +16,6 @@ locals {
   vpc_project                        = "my-network-host-project"
   network_name                       = "default"
   odb_network_id                     = "tf-slc-odbnetwork"
-  odb_subnet_id                      = "tf-slc-odbsubnet"
   client_cidr_range                  = "172.16.119.0/25"
   backup_cidr_range                  = "172.16.119.128/25"
   gcp_oracle_zone                    = "us-west3-a-r1"
@@ -56,7 +55,6 @@ module "odb-network" {
   network_name           = local.network_name
   gcp_oracle_zone        = local.gcp_oracle_zone
   odb_network_id         = local.odb_network_id
-  odb_subnet_id          = local.odb_subnet_id
   client_cidr_range      = local.client_cidr_range
   backup_cidr_range      = local.backup_cidr_range
   deletion_protection    = local.network_deletion_protection
