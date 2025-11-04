@@ -15,11 +15,11 @@ locals {
   location                           = "us-east4"
   vpc_project                        = "my-network-host-project"
   network_name                       = "default"
-  odb_network_id                     = "tf-slc-odbnetwork"
-  odb_subnet_id                      = "tf-slc-odbsubnet"
+  odb_network_id                     = "tf-ash-odbnetwork"
+  odb_subnet_id                      = "tf-ash-odbnetwork"
   client_cidr_range                  = "172.16.119.0/25"
   backup_cidr_range                  = "172.16.119.128/25"
-  gcp_oracle_zone                    = "us-west3-a-r1"
+  gcp_oracle_zone                    = "us-east4-b-r1"
 
   # DB System Configuration
   db_system_id                 = "mydb1"
@@ -31,7 +31,7 @@ locals {
   initial_data_storage_size_gb = "256"
   db_edition                   = "ENTERPRISE_EDITION"
   license_type                 = "BRING_YOUR_OWN_LICENSE"
-  db_version                   = "23.26.0.0"
+  db_version                   = "23.26.0.0.0"
   db_name                      = "mycdb1"
   db_unique_name               = "mycdb1"
   admin_pw                     = random_password.database_password.result
@@ -44,7 +44,11 @@ locals {
 resource "random_password" "database_password" {
   length           = 16
   special          = true
-  override_special = "!#^_*"
+  min_lower        = 2
+  min_upper        = 2
+  min_numeric      = 2
+  min_special      = 2
+  override_special = "#-_"
 }
 
 data "google_compute_network" "this" {
