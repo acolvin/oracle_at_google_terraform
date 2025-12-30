@@ -79,6 +79,18 @@ variable "backup_retention_period_days" {
   default = null
 }
 
+variable "is_auto_scaling_enabled" {
+  type = string
+  description = "Set to true to enable CPU auto-scaling"
+  default = "false"
+}
+
+variable "is_storage_auto_scaling_enabled" {
+  type = string
+  description = "Set to true to enable storage auto-scaling"
+  default = "false"
+}
+
 variable "deletion_protection" {
   type = string
   description = "when set to true resources will be protected from accidental deletion"
