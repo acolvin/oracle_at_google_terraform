@@ -26,11 +26,13 @@ locals {
   autonomous_database_id             = "myadb1"
   adb_admin_pw                       = "Google123456"
   ecpu_count                         = "2"
-  data_storage_size_gb               = "20"
+  data_storage_size_gb               = "20" #set if workload_type = OLTP, APEX, or AJD
+  data_storage_size_tb               = null #set if workload_type = DW
   db_version                         = "23ai"
   workload_type                      = "OLTP"
-  db_edition                         = "ENTERPRISE_EDITION"
-  adb_license_type                   = "LICENSE_INCLUDED"
+  db_edition                         = null # set to ENTERPRISE_EDITION or STANDARD_EDITION if adb_license_type is set to BRING_YOUR_OWN_LICENSE
+  adb_license_type                   = "BRING_YOUR_OWN_LICENSE"
+  backup_retention_period_days       = "1"
 }
 
 resource "random_password" "adb_password" {
@@ -73,9 +75,11 @@ module "adb" {
   odb_network_id                  = local.odb_network_id
   ecpu_count                      = local.ecpu_count
   data_storage_size_gb            = local.data_storage_size_gb
+  data_storage_size_tb            = local.data_storage_size_tb
   db_version                      = local.db_version
   workload_type                   = local.workload_type
   db_edition                      = local.db_edition
   license_type                    = local.adb_license_type
+  backup_retention_period_days    = local.backup_retention_period_days
   deletion_protection             = local.adb_deletion_protection
 }

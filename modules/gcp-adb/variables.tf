@@ -39,8 +39,14 @@ variable "ecpu_count" {
 
 variable "data_storage_size_gb" {
   type = string
-  description = "How much storage is available to the database"
+  description = "Number of gigabytes of storage to provision for ADB. Used with OLTP, AJD, APEX workload types"
   default = "20"
+}
+
+variable "data_storage_size_tb" {
+  type = string
+  description = "Number of terabytes of storage to provision for ADB. Used with DW workload type"
+  default = null
 }
 
 variable "db_version" {
@@ -57,7 +63,7 @@ variable "workload_type" {
 
 variable "db_edition" {
   type = string
-  description = "database version - either 19c or 23ai"
+  description = "database edition - only used when license_type is set to BRING_YOUR_OWN_LICENSE"
   default = "ENTERPRISE_EDITION"
 }
 
@@ -65,6 +71,12 @@ variable "license_type" {
   type = string
   description = "Whether you are using BYOL or boying a license-included SKU. Options are LICENSE_INCLUDED and BRING_YOUR_OWN_LICENSE."
   default = "LICENSE_INCLUDED"
+}
+
+variable "backup_retention_period_days" {
+  type = string
+  description = "Number of days that automatic backups should be stored"
+  default = null
 }
 
 variable "deletion_protection" {
