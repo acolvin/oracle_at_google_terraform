@@ -14,6 +14,7 @@ This repository includes the following modules:
 *   **gcp-adb**: Deploys a Google Cloud Autonomous Database (ADB) instance.
 *   **gcp-exadata-infra**: Deploys the underlying Exadata infrastructure for Exadata database deployments.
 *   **gcp-exadata-vmcluster**: Deploys an Exadata VM cluster on top of the Exadata infrastructure.
+*   **gcp-dbsystem**: Deploys a Base Databse Service instance including a CDB and one PDB.
 
 ## Getting Started
 
@@ -27,12 +28,13 @@ To use these modules, you will need to have Terraform installed and configured f
 
 ### Examples
 
-The `examples` directory contains example deployments that demonstrate how to use the modules.
+The [examples](examples) directory contains example deployments that demonstrate how to use the modules.
 
-*   **adb-plus-shared-vpc**: Deploys an Autonomous Database instance in a shared VPC environment.
-*   **exa-plus-shared-vpc**: Deploys an Exadata infrastructure and VM cluster in a shared VPC environment.
+*   **[adb-plus-shared-vpc](examples/adb-plus-shared-vpc)**: Deploys an Autonomous Database instance in a shared VPC environment.
+*   **[exa-plus-shared-vpc](examples/exa-plus-shared-vpc)**: Deploys an Exadata infrastructure and VM cluster in a shared VPC environment.
+*   **[basedb-plus-shared-vpc](examples/basedb-plus-shared-vpc)**: Deploys a Base Database Service instance in a shared VPC environment.
 
-To use the examples, navigate to the example directory and run the following commands:
+To use the examples, navigate to the `examples` directory, update the variables in `main.tf`, and run the following commands:
 
 ```bash
 terraform init
@@ -73,49 +75,6 @@ module "odb-network" {
 | `client_cidr_range` | The CIDR range used for the client ODB Subnet. | `string` | n/a | yes |
 | `backup_cidr_range` | The CIDR range used for the backup ODB Subnet. | `string` | n/a | yes |
 | `gcp_oracle_zone` | The zone where the ODB Network will reside. | `string` | `"Any"` | no |
-| `deletion_protection` | When set to true resources will be protected from accidental deletion. | `string` | `"true"` | no |
-
-### gcp-adb
-
-This module deploys a Google Cloud Autonomous Database (ADB) instance.
-
-#### Usage
-
-```terraform
-module "adb" {
-  source = "../../modules/gcp-adb"
-
-  location               = "us-west3"
-  adb_project            = "my-adb-project"
-  autonomous_database_id = "myadb1"
-  adb_admin_pw           = "your-password"
-  vpc_project            = "my-network-host-project"
-  odb_network_id         = "tf-slc-odbnetwork"
-  ecpu_count             = "2"
-  data_storage_size_gb   = "20"
-  db_version             = "23ai"
-  workload_type          = "OLTP"
-  db_edition             = "ENTERPRISE_EDITION"
-  license_type           = "LICENSE_INCLUDED"
-}
-```
-
-#### Variables
-
-| Name | Description | Type | Default | Required |
-| --- | --- | --- | --- | --- |
-| `autonomous_database_id` | The name of the autonomous database. | `string` | n/a | yes |
-| `adb_admin_pw` | The admin password of your Autonomous Database. | `string` | n/a | yes |
-| `location` | GCP region where services are hosted. | `string` | n/a | yes |
-| `adb_project` | The ID of the project in which the ADB belongs. | `string` | `""` | no |
-| `vpc_project` | The ID of the project in which the ODB Network belongs. | `string` | `""` | no |
-| `odb_network_id` | The name of the ODB Network. | `string` | n/a | yes |
-| `ecpu_count` | The number of ECPUs available to my instance. | `string` | `"2"` | no |
-| `data_storage_size_gb` | How much storage is available to the database. | `string` | `"20"` | no |
-| `db_version` | Database version - either 19c or 23ai. | `string` | `"19c"` | no |
-| `workload_type` | The workload type of the cluster, either OLTP, DW, AJD, APEX. | `string` | `"OLTP"` | no |
-| `db_edition` | Database edition. | `string` | `"ENTERPRISE_EDITION"` | no |
-| `license_type` | Whether you are using BYOL or buying a license-included SKU. | `string` | `"LICENSE_INCLUDED"` | no |
 | `deletion_protection` | When set to true resources will be protected from accidental deletion. | `string` | `"true"` | no |
 
 ### gcp-exadata-infra
