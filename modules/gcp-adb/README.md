@@ -62,7 +62,7 @@ The code block below will create a new Autonomous AI Database in a [shared VPC](
 | License Type | Bring your own license |
 | Automatic Backup Retention | 60 Days |
 | Compute Auto-Scaling | Off |
-| Storage Auto-Ccaling | Off |
+| Storage Auto-Scaling | Off |
 
 ```terraform
 module "adb" {
