@@ -2,33 +2,37 @@
 variable "autonomous_database_id" {
   type = string
   description = "The name of the autonomous database"
-}
-
-variable "adb_admin_pw" {
-  type = string
-  description = "The admin password of your Autonomous Database"
+  default = null
 }
 
 variable "location" {
   type = string
   description = "GCP region where services are hosted."
+  default = null
 }
 
 variable "adb_project" {
   type = string
   description = "The ID of the project in which the ADB belongs. If it is not provided, the provider project is used."
-  default = ""
+  default = null
+}
+
+variable "adb_admin_pw" {
+  type = string
+  description = "The admin password of your Autonomous Database"
+  default = null
 }
 
 variable "vpc_project" {
   type = string
   description = "The ID of the project in which the ODB Network belongs. If it is not provided, the provider project is used."
-  default = ""
+  default = null
 }
 
 variable "odb_network_id" {
   type = string
   description = "The name of the ODB Network."
+  default = null
 }
 
 variable "ecpu_count" {
@@ -40,7 +44,7 @@ variable "ecpu_count" {
 variable "data_storage_size_gb" {
   type = string
   description = "Number of gigabytes of storage to provision for ADB. Used with OLTP, AJD, APEX workload types"
-  default = "20"
+  default = null
 }
 
 variable "data_storage_size_tb" {
@@ -77,6 +81,18 @@ variable "backup_retention_period_days" {
   type = string
   description = "Number of days that automatic backups should be stored"
   default = null
+}
+
+variable "is_auto_scaling_enabled" {
+  type = string
+  description = "Set to true to enable CPU auto-scaling"
+  default = "false"
+}
+
+variable "is_storage_auto_scaling_enabled" {
+  type = string
+  description = "Set to true to enable storage auto-scaling"
+  default = "false"
 }
 
 variable "deletion_protection" {

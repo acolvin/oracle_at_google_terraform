@@ -33,6 +33,8 @@ locals {
   db_edition                         = null # set to ENTERPRISE_EDITION or STANDARD_EDITION if adb_license_type is set to BRING_YOUR_OWN_LICENSE
   adb_license_type                   = "BRING_YOUR_OWN_LICENSE"
   backup_retention_period_days       = "1"
+  is_auto_scaling_enabled            = "false"
+  is_storage_auto_scaling_enabled    = "false"
 }
 
 resource "random_password" "adb_password" {
@@ -81,5 +83,7 @@ module "adb" {
   db_edition                      = local.db_edition
   license_type                    = local.adb_license_type
   backup_retention_period_days    = local.backup_retention_period_days
+  is_auto_scaling_enabled         = local.is_auto_scaling_enabled
+  is_storage_auto_scaling_enabled = local.is_storage_auto_scaling_enabled
   deletion_protection             = local.adb_deletion_protection
 }
