@@ -10,8 +10,8 @@ Update the local variables within `examples/exa-plus-shared-vpc/main.tf` or `exa
 
 This repository includes the following modules:
 
-*   **gcp-odb-network**: Creates the necessary networking resources for Oracle databases, including an ODB Network and ODB Subnets for client and backup traffic.
-*   **[gcp-adb](modules/gcp-adb/README.md)**: Deploys a Google Cloud Autonomous Database (ADB) instance.
+*   **[gcp-odb-network](modules/gcp-odb-network)**: Creates the necessary networking resources for Oracle databases, including an ODB Network and ODB Subnets for client and backup traffic.
+*   **[gcp-adb](modules/gcp-adb)**: Deploys a Google Cloud Autonomous Database (ADB) instance.
 *   **gcp-exadata-infra**: Deploys the underlying Exadata infrastructure for Exadata database deployments.
 *   **gcp-exadata-vmcluster**: Deploys an Exadata VM cluster on top of the Exadata infrastructure.
 *   **gcp-dbsystem**: Deploys a Base Databse Service instance including a CDB and one PDB.
@@ -43,39 +43,6 @@ terraform apply
 ```
 
 ## Module Details
-
-### gcp-odb-network
-
-This module creates the networking resources required for Oracle databases in Google Cloud.
-
-#### Usage
-
-```terraform
-module "odb-network" {
-  source = "../../modules/gcp-odb-network"
-
-  location          = "us-west3"
-  vpc_project       = "my-network-host-project"
-  network_name      = "default"
-  gcp_oracle_zone   = "us-west3-a-r1"
-  odb_network_id    = "tf-slc-odbnetwork"
-  client_cidr_range = "172.16.119.0/25"
-  backup_cidr_range = "172.16.119.128/25"
-}
-```
-
-#### Variables
-
-| Name | Description | Type | Default | Required |
-| --- | --- | --- | --- | --- |
-| `network_name` | The name of the VPC network used by the ODB Network. | `string` | n/a | yes |
-| `vpc_project` | The ID of the project in which the resource belongs. | `string` | `""` | no |
-| `odb_network_id` | The name of the ODB Network. | `string` | n/a | yes |
-| `location` | GCP region where services are hosted. | `string` | n/a | yes |
-| `client_cidr_range` | The CIDR range used for the client ODB Subnet. | `string` | n/a | yes |
-| `backup_cidr_range` | The CIDR range used for the backup ODB Subnet. | `string` | n/a | yes |
-| `gcp_oracle_zone` | The zone where the ODB Network will reside. | `string` | `"Any"` | no |
-| `deletion_protection` | When set to true resources will be protected from accidental deletion. | `string` | `"true"` | no |
 
 ### gcp-exadata-infra
 

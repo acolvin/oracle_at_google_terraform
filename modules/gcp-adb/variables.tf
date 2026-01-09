@@ -5,12 +5,6 @@ variable "autonomous_database_id" {
   default = null
 }
 
-variable "adb_admin_pw" {
-  type = string
-  description = "The admin password of your Autonomous Database"
-  default = null
-}
-
 variable "location" {
   type = string
   description = "GCP region where services are hosted."
@@ -20,6 +14,12 @@ variable "location" {
 variable "adb_project" {
   type = string
   description = "The ID of the project in which the ADB belongs. If it is not provided, the provider project is used."
+  default = null
+}
+
+variable "adb_admin_pw" {
+  type = string
+  description = "The admin password of your Autonomous Database"
   default = null
 }
 
