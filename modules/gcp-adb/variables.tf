@@ -35,6 +35,12 @@ variable "odb_network_id" {
   default = null
 }
 
+variable "odb_subnet_id" {
+  type = string
+  description = "Name of the ODB Subnet."
+  default = null
+}
+
 variable "ecpu_count" {
   type = string
   description = "The number of ECPUs available to my instance"

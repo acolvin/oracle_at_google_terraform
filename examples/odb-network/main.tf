@@ -22,12 +22,6 @@ locals {
   subnet_deletion_protection         = "true"
 }
 
-resource "random_password" "adb_password" {
-  length           = 16
-  special          = true
-  override_special = "!#^*"
-}
-
 data "google_compute_network" "this" {
   name     = local.network_name
   project  = local.vpc_project
@@ -44,8 +38,6 @@ module "odb-network" {
   network_name           = local.network_name
   gcp_oracle_zone        = local.gcp_oracle_zone
   odb_network_id         = local.odb_network_id
-  client_cidr_range      = local.client_cidr_range
-  backup_cidr_range      = local.backup_cidr_range
   deletion_protection    = local.network_deletion_protection
 }
 

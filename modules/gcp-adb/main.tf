@@ -9,7 +9,7 @@ resource "google_oracle_database_autonomous_database" "adb"{
   display_name           = var.autonomous_database_id
   admin_password         = var.adb_admin_pw
   odb_network            = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}"
-  odb_subnet             = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_network_id}-c1"
+  odb_subnet             = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_subnet_id}"
   properties {
     compute_count                         = var.ecpu_count
     data_storage_size_gb                  = var.data_storage_size_gb

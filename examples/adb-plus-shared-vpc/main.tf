@@ -17,14 +17,13 @@ locals {
   network_name                       = "default"
   odb_network_id                     = "tf-slc-odbnetwork"
   client_cidr_range                  = "172.16.119.0/25"
-  backup_cidr_range                  = "172.16.119.128/25"
   gcp_oracle_zone                    = "us-west3-a-r1"
+  subnet_deletion_protection         = "true"  
 
   # ADB Instance Configuration
   adb_deletion_protection            = "true"
   adb_project                        = "my-adb-project"
   autonomous_database_id             = "myadb1"
-  adb_admin_pw                       = "Google123456"
   ecpu_count                         = "2"
   data_storage_size_gb               = "20" #set if workload_type = OLTP, APEX, or AJD
   data_storage_size_tb               = null #set if workload_type = DW
@@ -43,7 +42,7 @@ resource "random_password" "adb_password" {
   override_special = "!#^*"
 }
 
-data "google_compute_network" "this" {
+data "google_compute_network" "vpc-network" {
   name     = local.network_name
   project  = local.vpc_project
 }
@@ -51,7 +50,7 @@ data "google_compute_network" "this" {
 # ODB Network
 module "odb-network" {
   source = "../../modules/gcp-odb-network"
-  depends_on = [ data.google_compute_network.this ]
+  depends_on = [ data.google_compute_network.vpc-network ]
 
   # Required
   location               = local.location
@@ -59,14 +58,28 @@ module "odb-network" {
   network_name           = local.network_name
   gcp_oracle_zone        = local.gcp_oracle_zone
   odb_network_id         = local.odb_network_id
-  client_cidr_range      = local.client_cidr_range
-  backup_cidr_range      = local.backup_cidr_range
   deletion_protection    = local.network_deletion_protection
 }
 
+# ODB Subnet
+module "client-subnet" {
+  source = "../../modules/gcp-odb-subnet"
+  depends_on = [ module.odb-network ]
+
+  # Required
+  odb_subnet_id          = "${local.odb_network_id}-c1"
+  location               = local.location
+  vpc_project            = local.vpc_project
+  odb_network_id         = local.odb_network_id
+  subnet_cidr_range      = local.client_cidr_range
+  subnet_purpose         = "CLIENT_SUBNET"
+  deletion_protection    = local.subnet_deletion_protection
+}
+
+# ADB Instance
 module "adb" {
   source = "../../modules/gcp-adb"
-  depends_on = [ module.odb-network ]
+  depends_on = [ module.client-subnet ]
 
   # Required
   location                        = local.location
@@ -75,6 +88,7 @@ module "adb" {
   adb_admin_pw                    = random_password.adb_password.result
   vpc_project                     = local.vpc_project
   odb_network_id                  = local.odb_network_id
+  odb_subnet_id                   = "${local.odb_network_id}-c1"
   ecpu_count                      = local.ecpu_count
   data_storage_size_gb            = local.data_storage_size_gb
   data_storage_size_tb            = local.data_storage_size_tb
