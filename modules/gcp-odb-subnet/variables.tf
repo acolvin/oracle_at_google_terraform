@@ -1,7 +1,13 @@
 # Required
-variable "network_name" {
+variable "odb_subnet_id" {
   type = string
-  description = "The name of the VPC network used by the ODB Network"
+  description = "The name of the ODB Subnet."
+  default = null
+}
+
+variable "location" {
+  type = string
+  description = "GCP region where services are hosted."
   default = null
 }
 
@@ -17,16 +23,16 @@ variable "odb_network_id" {
   default = null
 }
 
-variable "location" {
+variable "subnet_cidr_range" {
   type = string
-  description = "GCP region where services are hosted."
+  description = "The CIDR range used for the ODB Subnet."
   default = null
 }
 
-variable "gcp_oracle_zone" {
+variable "subnet_purpose" {
   type = string
-  description = "The zone where the ODB Network will reside"
-  default = "Any"
+  description = "The CIDR range used for the ODB Subnet."
+  default = "CLIENT_SUBNET"
 }
 
 variable "deletion_protection" {
