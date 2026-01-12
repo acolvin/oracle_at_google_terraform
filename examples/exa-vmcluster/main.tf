@@ -41,7 +41,7 @@ data "google_oracle_database_cloud_exadata_infrastructure" "exa-infra"{
 
 module "vmcluster-1" {
   source = "../../modules/gcp-exadata-vmcluster"
-  depends_on = [ module.exadata-infra ]
+  depends_on = [ data.google_oracle_database_cloud_exadata_infrastructure.exa-infra ]
 
   # Required
   location                        = local.location

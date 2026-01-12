@@ -50,7 +50,7 @@ resource "random_password" "database_password" {
   override_special = "#-_"
 }
 
-data "google_compute_network" "this" {
+data "google_compute_network" "vpc-network" {
   name     = local.network_name
   project  = local.vpc_project
 }
@@ -86,7 +86,7 @@ module "client-subnet" {
 
 module "basedb" {
   source = "../../modules/gcp-dbsystem"
-  depends_on = [ module.odb-network ]
+  depends_on = [ module.client-subnet ]
 
   # Required
   db_system_id                 = local.db_system_id

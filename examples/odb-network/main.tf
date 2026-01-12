@@ -22,7 +22,7 @@ locals {
   subnet_deletion_protection         = "true"
 }
 
-data "google_compute_network" "this" {
+data "google_compute_network" "vpc-network" {
   name     = local.network_name
   project  = local.vpc_project
 }
@@ -30,7 +30,7 @@ data "google_compute_network" "this" {
 # ODB Network
 module "odb-network" {
   source = "../../modules/gcp-odb-network"
-  depends_on = [ data.google_compute_network.this ]
+  depends_on = [ data.google_compute_network.vpc-network ]
 
   # Required
   location               = local.location

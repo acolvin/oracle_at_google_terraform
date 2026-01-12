@@ -43,7 +43,7 @@ locals {
 }
 
 
-data "google_compute_network" "this" {
+data "google_compute_network" "vpc-network" {
   name     = local.network_name
   project  = local.vpc_project
 }
@@ -94,7 +94,7 @@ module "backup-subnet" {
 
 module "exadata-infra" {
   source = "../../modules/gcp-exadata-infra"
-  depends_on = [ module.odb-network ]
+  depends_on = [ module.backup-subnet ]
 
   location                        = local.location
   exa_infra_project               = local.exa_infra_project
