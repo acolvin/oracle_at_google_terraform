@@ -19,10 +19,11 @@ locals {
   client_cidr_range                  = "172.16.119.0/25"
   backup_cidr_range                  = "172.16.119.128/25"
   gcp_oracle_zone                    = "us-west3-a-r1"
+  subnet_deletion_protection         = "true"
   
   # Exadata Infrastructure Configuration
   exadata_infra_deletion_protection  = "true"
-  cloud_exadata_infrastructure_id    = "ofake-tf-slc1"
+  cloud_exadata_infrastructure_id    = "exa-tf-slc1"
   exa_infra_project                  = "my-exadata-infra-project"
   shape                              = "Exadata.X11M"
   compute_count                      = "2"
@@ -31,14 +32,14 @@ locals {
   # Exadata VM Cluster 1 Configuration
   exadata_vm_deletion_protection     = "true"
   exa_vm_project                     = "my-exadata-vm-project"
-  cloud_vm_cluster_id                = "ofake-vmc1"
+  cloud_vm_cluster_id                = "exa-vmc1"
   exa_license_type                   = "BRING_YOUR_OWN_LICENSE"
   gi_version                         = "23.0.0.0"
   cpu_core_count                     = "32"
   memory_size_gb                     = "60"
   db_node_storage_size_gb            = "120"
   hostname_prefix                    = "slc-vmc1"
-  ssh_public_keys                    = "ssh-rsa insert-key-here"
+  ssh_public_keys                    = "ssh-rsa key-data"
 }
 
 
@@ -50,7 +51,7 @@ data "google_compute_network" "this" {
 # ODB Network
 module "odb-network" {
   source = "../../modules/gcp-odb-network"
-  depends_on = [ data.google_compute_network.this ]
+  depends_on = [ data.google_compute_network.vpc-network ]
 
   # Required
   location               = local.location
@@ -58,9 +59,37 @@ module "odb-network" {
   network_name           = local.network_name
   gcp_oracle_zone        = local.gcp_oracle_zone
   odb_network_id         = local.odb_network_id
-  client_cidr_range      = local.client_cidr_range
-  backup_cidr_range      = local.backup_cidr_range
   deletion_protection    = local.network_deletion_protection
+}
+
+# ODB Subnet
+module "client-subnet" {
+  source = "../../modules/gcp-odb-subnet"
+  depends_on = [ module.odb-network ]
+
+  # Required
+  odb_subnet_id          = "${local.odb_network_id}-c1"
+  location               = local.location
+  vpc_project            = local.vpc_project
+  odb_network_id         = local.odb_network_id
+  subnet_cidr_range      = local.client_cidr_range
+  subnet_purpose         = "CLIENT_SUBNET"
+  deletion_protection    = local.subnet_deletion_protection
+}
+
+# ODB Subnet
+module "backup-subnet" {
+  source = "../../modules/gcp-odb-subnet"
+  depends_on = [ module.client-subnet ]
+
+  # Required
+  odb_subnet_id          = "${local.odb_network_id}-b1"
+  location               = local.location
+  vpc_project            = local.vpc_project
+  odb_network_id         = local.odb_network_id
+  subnet_cidr_range      = local.backup_cidr_range
+  subnet_purpose         = "BACKUP_SUBNET"
+  deletion_protection    = local.subnet_deletion_protection
 }
 
 module "exadata-infra" {
