@@ -36,6 +36,16 @@ variable "odb_network_id" {
   description = "The name of the ODB Network."
 }
 
+variable "odb_client_subnet_id" {
+  type = string
+  description = "The name of the ODB Subnet used for the client network."
+}
+
+variable "odb_backup_subnet_id" {
+  type = string
+  description = "The name of the ODB Subnet used for the backup network."
+}
+
 variable "license_type" {
     type = string
     description = "either BRING_YOUR_OWN_LICENSE or LICENSE_INCLUDED"

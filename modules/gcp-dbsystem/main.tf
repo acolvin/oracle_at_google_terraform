@@ -8,7 +8,7 @@ resource "google_oracle_database_db_system" "db_system"{
     gcp_oracle_zone = var.gcp_oracle_zone
     project         = var.dbsystem_project
     odb_network     = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}"
-    odb_subnet      = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_network_id}-c1"
+    odb_subnet      = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_subnet_id}"
     properties {
         ssh_public_keys              = var.ssh_public_keys
         compute_count                = var.ecpu_core_count

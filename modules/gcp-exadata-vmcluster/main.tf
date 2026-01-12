@@ -23,8 +23,8 @@ resource "google_oracle_database_cloud_vm_cluster" "exadata_vm_cluster"{
   project                = var.exa_vm_project
   exadata_infrastructure = "projects/${var.exa_infra_project}/locations/${var.location}/cloudExadataInfrastructures/${var.cloud_exadata_infrastructure_id}"
   odb_network            = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}"
-  odb_subnet             = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_network_id}-c1"
-  backup_odb_subnet      = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_network_id}-b1"
+  odb_subnet             = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_client_subnet_id}"
+  backup_odb_subnet      = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_backup_subnet_id}"
   properties {
     license_type            = var.license_type
     ssh_public_keys         = var.ssh_public_keys

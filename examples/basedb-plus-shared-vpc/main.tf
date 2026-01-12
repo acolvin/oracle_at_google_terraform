@@ -94,6 +94,7 @@ module "basedb" {
   gcp_oracle_zone              = local.gcp_oracle_zone
   dbsystem_project             = local.dbsystem_project
   odb_network_id               = local.odb_network_id
+  odb_subnet_id                = "${local.odb_network_id}-c1"
   vpc_project                  = local.vpc_project
   ssh_public_keys              = [local.ssh_public_keys]
   ecpu_core_count              = local.ecpu_core_count

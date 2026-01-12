@@ -31,6 +31,12 @@ variable "odb_network_id" {
   description = "The name of the ODB Network."
 }
 
+variable "odb_subnet_id" {
+  type = string
+  description = "Name of the ODB Subnet."
+  default = null
+}
+
 variable "ssh_public_keys" {
     type = set(string)
     description = "SSH keys for the DB system"
