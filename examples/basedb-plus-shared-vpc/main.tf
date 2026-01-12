@@ -17,13 +17,13 @@ locals {
   network_name                       = "default"
   odb_network_id                     = "tf-ash-odbnetwork"
   client_cidr_range                  = "172.16.119.0/25"
-  backup_cidr_range                  = "172.16.119.128/25"
   gcp_oracle_zone                    = "us-east4-b-r1"
+  subnet_deletion_protection         = "true"
 
   # DB System Configuration
   db_system_id                 = "mydb1"
   dbsystem_project             = "my-oracle-project"
-  ssh_public_keys              = "ssh-rsa insert-key-here"
+  ssh_public_keys              = "ssh-rsa key-data"
   ecpu_core_count              = "4"
   hostname_prefix              = "mydb1"
   data_storage_size_gb         = "256"
@@ -58,7 +58,7 @@ data "google_compute_network" "this" {
 # ODB Network
 module "odb-network" {
   source = "../../modules/gcp-odb-network"
-  depends_on = [ data.google_compute_network.this ]
+  depends_on = [ data.google_compute_network.vpc-network ]
 
   # Required
   location               = local.location
@@ -66,9 +66,22 @@ module "odb-network" {
   network_name           = local.network_name
   gcp_oracle_zone        = local.gcp_oracle_zone
   odb_network_id         = local.odb_network_id
-  client_cidr_range      = local.client_cidr_range
-  backup_cidr_range      = local.backup_cidr_range
   deletion_protection    = local.network_deletion_protection
+}
+
+# ODB Subnet
+module "client-subnet" {
+  source = "../../modules/gcp-odb-subnet"
+  depends_on = [ module.odb-network ]
+
+  # Required
+  odb_subnet_id          = "${local.odb_network_id}-c1"
+  location               = local.location
+  vpc_project            = local.vpc_project
+  odb_network_id         = local.odb_network_id
+  subnet_cidr_range      = local.client_cidr_range
+  subnet_purpose         = "CLIENT_SUBNET"
+  deletion_protection    = local.subnet_deletion_protection
 }
 
 module "basedb" {
