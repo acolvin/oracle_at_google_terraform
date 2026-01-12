@@ -1,4 +1,3 @@
-# Required
 variable "odb_subnet_id" {
   type = string
   description = "The name of the ODB Subnet."

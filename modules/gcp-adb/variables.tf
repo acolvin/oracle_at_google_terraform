@@ -1,4 +1,3 @@
-# Required
 variable "autonomous_database_id" {
   type = string
   description = "The name of the autonomous database"

@@ -1,4 +1,3 @@
-# Required
 variable "network_name" {
   type = string
   description = "The name of the VPC network used by the ODB Network"

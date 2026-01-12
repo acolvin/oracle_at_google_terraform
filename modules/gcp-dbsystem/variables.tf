@@ -1,4 +1,3 @@
-# Required
 variable "db_system_id" {
   type = string
   description = "The name of the DB system"
