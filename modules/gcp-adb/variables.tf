@@ -1,4 +1,3 @@
-# Required
 variable "autonomous_database_id" {
   type = string
   description = "The name of the autonomous database"
@@ -32,6 +31,12 @@ variable "vpc_project" {
 variable "odb_network_id" {
   type = string
   description = "The name of the ODB Network."
+  default = null
+}
+
+variable "odb_subnet_id" {
+  type = string
+  description = "Name of the ODB Subnet."
   default = null
 }
 

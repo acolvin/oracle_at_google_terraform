@@ -1,4 +1,3 @@
-# Required
 variable "db_system_id" {
   type = string
   description = "The name of the DB system"
@@ -29,6 +28,12 @@ variable "vpc_project" {
 variable "odb_network_id" {
   type = string
   description = "The name of the ODB Network."
+}
+
+variable "odb_subnet_id" {
+  type = string
+  description = "Name of the ODB Subnet."
+  default = null
 }
 
 variable "ssh_public_keys" {

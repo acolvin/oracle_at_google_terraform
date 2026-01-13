@@ -1,4 +1,3 @@
-# Required
 variable "location" {
   type = string
   description = "GCP region where services are hosted."

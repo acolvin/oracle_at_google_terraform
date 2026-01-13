@@ -12,17 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-data "google_compute_network" "vpc-network" {
-  name     = var.network_name
-  project = var.vpc_project
-}
-
-resource "google_oracle_database_odb_network" "odb-network"{
-  odb_network_id  = var.odb_network_id
-  location        = var.location
-  project         = var.vpc_project
-  network         = data.google_compute_network.vpc-network.id
-  gcp_oracle_zone = var.gcp_oracle_zone
+resource "google_oracle_database_odb_subnet" "odb_subnet"{
+  odb_subnet_id = var.odb_subnet_id
+  location      = var.location
+  project       = var.vpc_project
+  odbnetwork    = var.odb_network_id
+  cidr_range    = var.subnet_cidr_range
+  purpose       = var.subnet_purpose
   labels = {
     terraform_created = "true"
   }

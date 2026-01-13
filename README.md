@@ -10,7 +10,8 @@ Update the local variables within `examples/exa-plus-shared-vpc/main.tf` or `exa
 
 This repository includes the following modules:
 
-*   **[gcp-odb-network](modules/gcp-odb-network)**: Creates the necessary networking resources for Oracle databases, including an ODB Network and ODB Subnets for client and backup traffic.
+*   **[gcp-odb-network](modules/gcp-odb-network)**: Creates an ODB Network, which provides the foundation for connecting to Oracle Database@Google Cloud resources.
+*   **[gcp-odb-subnet](modules/gcp-odb-subnet)**: Creates ODB Subnets, which reside within an ODB Network.
 *   **[gcp-adb](modules/gcp-adb)**: Deploys a Google Cloud Autonomous Database (ADB) instance.
 *   **gcp-exadata-infra**: Deploys the underlying Exadata infrastructure for Exadata database deployments.
 *   **gcp-exadata-vmcluster**: Deploys an Exadata VM cluster on top of the Exadata infrastructure.
@@ -30,11 +31,14 @@ To use these modules, you will need to have Terraform installed and configured f
 
 The [examples](examples) directory contains example deployments that demonstrate how to use the modules.
 
-*   **[adb-plus-shared-vpc](examples/adb-plus-shared-vpc)**: Deploys an Autonomous Database instance in a shared VPC environment.
-*   **[exa-plus-shared-vpc](examples/exa-plus-shared-vpc)**: Deploys an Exadata infrastructure and VM cluster in a shared VPC environment.
-*   **[basedb-plus-shared-vpc](examples/basedb-plus-shared-vpc)**: Deploys a Base Database Service instance in a shared VPC environment.
+*   **[adb-existing-odbnetwork](examples/adb-existing-odbnetwork)**: Deploys an Autonomous Database instance in an existing ODB Network.
+*   **[adb-plus-shared-vpc](examples/adb-plus-shared-vpc)**: Deploys an ODB Network, ODB Subnet, and Autonomous AI Database and supports shared VPC configurations.
+*   **[basedb-plus-shared-vpc](examples/basedb-plus-shared-vpc)**: Deploys am ODB Network, ODB Subnet, and Base Database Service instance and supports shared VPC configurations.
+*   **[exa-plus-shared-vpc](examples/exa-plus-shared-vpc)**: Deploys an ODB Network, ODB Subnets, Exadata infrastructure, and VM cluster in a shared VPC environment.
+*   **[exa-vmcluster](examples/exa-vmcluster)**: Deploys an Exadata VM cluster to an existing infrastructure and ODB Network.
+*   **[odb-network](examples/odb-network)**: Deploys an ODB Network and two ODB Subnets.
 
-To use the examples, navigate to the `examples` directory, update the variables in `main.tf`, and run the following commands:
+To use the examples, navigate to the `examples` directory, update the local setings in `main.tf`, and run the following commands:
 
 ```bash
 terraform init

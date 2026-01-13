@@ -1,4 +1,3 @@
-# Required
 variable "location" {
   type = string
   description = "GCP region where services are hosted."
@@ -34,6 +33,16 @@ variable "vpc_project" {
 variable "odb_network_id" {
   type = string
   description = "The name of the ODB Network."
+}
+
+variable "odb_client_subnet_id" {
+  type = string
+  description = "The name of the ODB Subnet used for the client network."
+}
+
+variable "odb_backup_subnet_id" {
+  type = string
+  description = "The name of the ODB Subnet used for the backup network."
 }
 
 variable "license_type" {

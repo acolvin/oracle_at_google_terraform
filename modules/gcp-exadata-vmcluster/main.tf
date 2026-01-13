@@ -1,5 +1,16 @@
-### Created by andycolvin@google.com
-## Works in my tests, you break it, you buy it
+# Copyright 2025 Andy Colvin, Google
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 data "google_oracle_database_cloud_exadata_infrastructure" "exadata_infrastructure"{
   location                        = var.location
@@ -23,8 +34,8 @@ resource "google_oracle_database_cloud_vm_cluster" "exadata_vm_cluster"{
   project                = var.exa_vm_project
   exadata_infrastructure = "projects/${var.exa_infra_project}/locations/${var.location}/cloudExadataInfrastructures/${var.cloud_exadata_infrastructure_id}"
   odb_network            = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}"
-  odb_subnet             = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_network_id}-c1"
-  backup_odb_subnet      = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_network_id}-b1"
+  odb_subnet             = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_client_subnet_id}"
+  backup_odb_subnet      = "projects/${var.vpc_project}/locations/${var.location}/odbNetworks/${var.odb_network_id}/odbSubnets/${var.odb_backup_subnet_id}"
   properties {
     license_type            = var.license_type
     ssh_public_keys         = var.ssh_public_keys
