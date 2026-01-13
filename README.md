@@ -10,7 +10,8 @@ Update the local variables within `examples/exa-plus-shared-vpc/main.tf` or `exa
 
 This repository includes the following modules:
 
-*   **[gcp-odb-network](modules/gcp-odb-network)**: Creates the necessary networking resources for Oracle databases, including an ODB Network and ODB Subnets for client and backup traffic.
+*   **[gcp-odb-network](modules/gcp-odb-network)**: Creates an ODB Network, which provides the foundation for connecting to Oracle Database@Google Cloud resources.
+*   **[gcp-odb-subnet](modules/gcp-odb-subnet)**: Creates ODB Subnets, which reside within an ODB Network.
 *   **[gcp-adb](modules/gcp-adb)**: Deploys a Google Cloud Autonomous Database (ADB) instance.
 *   **gcp-exadata-infra**: Deploys the underlying Exadata infrastructure for Exadata database deployments.
 *   **gcp-exadata-vmcluster**: Deploys an Exadata VM cluster on top of the Exadata infrastructure.
