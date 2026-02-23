@@ -42,14 +42,14 @@ module "peer-adb" {
   source = "../../modules/gcp-adb-standby"
 
   # Required
-  peer_autonomous_database_id           = local.peer_adb_location
-  peer_adb_location                     = local.adb_project
-  adb_project                           = local.peer_autonomous_database_id
+  peer_autonomous_database_id           = local.peer_autonomous_database_id
+  peer_adb_location                     = local.peer_adb_location
+  adb_project                           = local.adb_project
   peer_autonomous_database_display_name = local.peer_autonomous_database_id
   vpc_project                           = local.vpc_project
   odb_network_id                        = local.odb_network_id
   odb_subnet_id                         = "${local.odb_network_id}-c1"
-  source_adb_id                         = data.google_oracle_database_autonomous_database.primary-adb.autonomous_database_id
+  source_adb_id                         = data.google_oracle_database_autonomous_database.primary-adb.id
   backup_replication_enabled            = local.backup_replication_enabled
   deletion_protection                   = local.adb_deletion_protection
 }
