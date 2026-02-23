@@ -13,6 +13,7 @@ This repository includes the following modules:
 *   **[gcp-odb-network](modules/gcp-odb-network)**: Creates an ODB Network, which provides the foundation for connecting to Oracle Database@Google Cloud resources.
 *   **[gcp-odb-subnet](modules/gcp-odb-subnet)**: Creates ODB Subnets, which reside within an ODB Network.
 *   **[gcp-adb](modules/gcp-adb)**: Deploys a Google Cloud Autonomous Database (ADB) instance.
+*   **[gcp-adb-standby](modules/gcp-adb-standby)**: Deploys a standby database for an existing Autonomous Database (ADB) instance.
 *   **gcp-exadata-infra**: Deploys the underlying Exadata infrastructure for Exadata database deployments.
 *   **gcp-exadata-vmcluster**: Deploys an Exadata VM cluster on top of the Exadata infrastructure.
 *   **gcp-dbsystem**: Deploys a Base Databse Service instance including a CDB and one PDB.
@@ -31,6 +32,7 @@ To use these modules, you will need to have Terraform installed and configured f
 
 The [examples](examples) directory contains example deployments that demonstrate how to use the modules.
 
+*   **[adb-cross-region-standby](examples/adb-cross-region-standby)**: Deploys a standby database for an existing Autonomous Database (ADB) instance.
 *   **[adb-existing-odbnetwork](examples/adb-existing-odbnetwork)**: Deploys an Autonomous Database instance in an existing ODB Network.
 *   **[adb-plus-shared-vpc](examples/adb-plus-shared-vpc)**: Deploys an ODB Network, ODB Subnet, and Autonomous AI Database and supports shared VPC configurations.
 *   **[basedb-plus-shared-vpc](examples/basedb-plus-shared-vpc)**: Deploys am ODB Network, ODB Subnet, and Base Database Service instance and supports shared VPC configurations.
